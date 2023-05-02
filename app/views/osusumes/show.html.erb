@@ -1,0 +1,66 @@
+<h1>Hondana</h1>
+<h3>Osusume詳細</h3>
+<div class="osusumes">
+  <p><%= @osusumes.name %></p>
+  <p><%= @osusumes.created_at %></p>
+  <p><%= @osusumes.title %></p>
+  <p><%= @osusumes.title2 %></p>
+  <p><%= @osusumes.title3 %></p>
+  <p><%= @osusumes.title4 %></p>
+  <p><%= @osusumes.title5 %></p>
+  <p><%= @osusumes.title6 %></p>
+  <p><%= @osusumes.title7 %></p>
+  <p><%= @osusumes.title8 %></p>
+  <p><%= @osusumes.title9 %></p>
+  <p><%= @osusumes.title10 %></p>
+  <%= image_tag @osusumes.image_url, size: "250x200" if @osusumes.image? %>
+    <% if user_signed_in? %>
+      <% if current_user.already_liked?(@osusumes) %>
+        <%= link_to osusume_like_path(@osusumes), method: :delete do %>
+          <i class="fas fa-heart"></i><%= @osusumes.likes.count %>
+        <% end %>
+      <% else %>
+        <%= link_to osusume_likes_path(@osusumes), method: :post do %>
+          <i class="far fa-heart"></i><%= @osusumes.likes.count %>
+        <% end %>
+      <% end %>
+    <% else %>
+    <i class="far fa-heart"></i><%= @osusumes.likes.count %>
+    <% end %>
+    <% if user_signed_in? && current_user.id == @osusumes.user_id %>
+      <%= link_to "編集する", edit_osusume_path(@osusumes.id) %>
+      <%= button_to "削除する", osusume_path(@osusumes.id), method: :delete %>
+    <% end %>
+</div>
+
+<% @osusumes.tags.each do |tag| %>
+  <span><%= tag.name %></span>
+<% end %>
+
+<h2>いいねしたユーザー</h2>
+<% @osusumes.liked_users.each do |user| %>
+  <li><%= user.email %></li>
+<% end %>
+
+<div class="comment-wrapper">
+  <p>コメント一覧</p>
+  <% @comments.each do |c| %>
+    <div>
+      <%= c.user.email unless c.user.blank? %>
+      <br>
+      <%= c.content %>
+    </div>
+      <br>
+  <% end %>
+
+  <% if user_signed_in? %>
+    <%= form_with(model: [@osusumes, @comment], local: true) do |f| %>
+      <%= f.text_area :content %>
+      <%= button_tag type: "submit" do %>
+        <i class="far fa-comments"></i> コメントする
+      <% end %>
+    <% end %>
+  <% end %>
+</div>
+
+<%= link_to "一覧に戻る", osusumes_path %>

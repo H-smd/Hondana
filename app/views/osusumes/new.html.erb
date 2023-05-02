@@ -1,0 +1,83 @@
+<h1>(自分の題名)</h1>
+<h3>新規投稿ページ</h3>
+<%= form_for @osusume do |f| %>
+
+
+  <div class="field">
+    <%= f.label :本棚名 %>
+    <%= f.text_field :name, :size => 30 %>
+  </div>
+
+
+  
+
+
+  <div class="field">
+    <%= f.label :本のタイトル1  %>
+    <%= f.text_field :title, :size => 10 %>
+  </div>
+
+  <div class="field">
+    <%= f.label :本のタイトル2  %>
+    <%= f.text_field :title2, :size => 10 %>
+  </div>
+<div class="field">
+  <%= f.label :本のタイトル3  %>
+  <%= f.text_field :title3, :size => 10 %>
+ </div>
+ <div class="field">
+    <%= f.label :本のタイトル4  %>
+    <%= f.text_field :title4, :size => 10 %>
+  </div>
+  <div class="field">
+    <%= f.label :本のタイトル5  %>
+    <%= f.text_field :title5, :size => 10 %>
+  </div>
+  <div class="field">
+    <%= f.label :本のタイトル6  %>
+    <%= f.text_field :title6, :size => 10 %>
+  </div>
+  <div class="field">
+    <%= f.label :本のタイトル7  %>
+    <%= f.text_field :title7, :size => 10 %>
+  </div>
+  <div class="field">
+    <%= f.label :本のタイトル8  %>
+    <%= f.text_field :title8, :size => 10 %>
+  </div>
+  <div class="field">
+    <%= f.label :本のタイトル9  %>
+    <%= f.text_field :title9, :size => 10 %>
+  </div>
+  <div class="field">
+    <%= f.label :本のタイトル10  %>
+    <%= f.text_field :title10, :size => 10 %>
+  </div>
+
+  <div class="field">
+    <%= f.label :説明  %>
+    <%= f.text_area :about, :size => "30x2" %>
+  </div>
+
+  <!-- 以下を追記 -->
+    <div class='form-group'>
+        <%= f.collection_check_boxes(:tag_ids, Tag.all, :id, :name) do |tag| %>
+            <div class='form-check'>
+                <%= tag.label class: 'form-check-label' do %>
+                    <%= tag.check_box class: 'form-check-input' %>
+                    <%= tag.text %>
+                <% end %>
+            </div>
+        <% end %>
+    </div>
+    <!-- ここまで -->
+
+  <div class="field">
+    <%= f.label :image %>
+    <%= f.file_field :image %>
+  </div>
+
+  <%= f.submit "投稿する" %>
+<% end %>
+
+<%= link_to "一覧に戻る", osusumes_path %>

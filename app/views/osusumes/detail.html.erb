@@ -1,0 +1,36 @@
+<html lang="ja"><!--言語の指定-->
+<head><!--ページに表示されない情報(サイトの裏側の設定)-->
+    <meta charset="utf-8">
+    <title></title><!--ブラウザのタブのタイトルを指定-->
+    <link rel="stylesheet" href="./stylesheets/index.css">
+</head>
+<h1>このサイトについて</h1>
+<body>
+    <li><%= link_to "一覧へ", osusumes_path %></li>
+
+    <section id="first-block">
+    </section>
+    <section id="second-block">
+    <p class="info-title">
+        About this site
+    </p>
+    <div class="about-container">
+    <p class="info-text">
+        <b>概要</b>
+        <br>
+        <span class="font-small">
+        このサイトは皆さんが好きな本を、自分のおすすめとして投稿できるサイトです。
+        <br>
+        本は一冊ずつではなく、最大10冊までを本棚として投稿することができます。
+        <br>
+        ぜひ、皆さんだけの本のつながりを共有していただければと思います。
+        </span>
+    </p>
+    </div>
+</section>
+<!--   Second block End   -->
+    <section id="third-block">
+    </section>
+<!--  コンテンツはここまで  -->
+</body>
+</html>

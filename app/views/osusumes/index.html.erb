@@ -1,0 +1,55 @@
+<h1>自分の題名</h1>
+<h3>一覧ページ</h3>
+<!--ここから-->
+<%= link_to "サイト説明", osusumes_detail_path %>
+<%= image_tag"hondana1.jpg", size:"1350x350" %>
+<h3>投稿を検索</h3>
+<%= form_tag({controller:"osusumes",action:"index"}, method: :get) do %>
+  <% Tag.all.each do |t| %>
+      <li><%= check_box :tag_ids, t.name %><%= t.name %></li>
+  <% end %>
+  <%= submit_tag '検索' %>
+<% end %>
+<!--ここまで-->
+<%= link_to "新規投稿へ", new_osusume_path %>
+<!--ここから-->
+<%= page_entries_info @osusumes %>
+<%= paginate @osusumes %>
+<!--ここまで-->
+<% if user_signed_in? %>
+  <%= link_to "マイページへ", user_path(current_user.id) %>
+<% end %>
+<div class="osusumes-container">
+  <% @osusumes.each do |t| %>
+    <div class="osusume">
+    
+    <%= t.user.email %>
+      <%= t.name %>
+      <%= t.title %>
+      <%= t.about %>
+      <% t.tags.each do |tag| %>
+        <span><%= tag.name %></span>
+    <% end %>
+      <% if user_signed_in? %>
+      <% if current_user.already_liked?(t) %>
+          <%= link_to osusume_like_path(id: t.id, osusume_id: t.id), method: :delete do %>
+            
+            <i class="fa-regular fa-heart"></i>
+          <% end %>
+      <% else %>
+          <%= link_to osusume_likes_path(id: t.id, osusume_id: t.id), method: :post do %>
+          
+            <i class="fa-solid fa-heart"></i>
+          <% end %>
+      <% end %>
+  <% else %>
+  <i class="far fa-heart"></i><%= t.likes.count %>
+  <% end %>
+      <%= link_to "詳細へ", osusume_path(t.id) %> 
+      <% if user_signed_in? && current_user.id == t.user_id %>
+      <%= link_to "編集する", edit_osusume_path(t.id) %>
+      <%= button_to "削除する", osusume_path(t.id), method: :delete %>
+      <% end %>
+    </div>
+  <% end %>
+</div>
